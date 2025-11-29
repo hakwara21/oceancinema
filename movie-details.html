@@ -3,85 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفاصيل الفيلم - سينما العرب</title>
+    <title>سينما العرب - تفاصيل الفيلم</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     
     <script type="module" src="components/navbar.js"></script>
     <script type="module" src="components/footer.js"></script>
+    <script type="module" src="components/video-player.js"></script>
+    <script type="module" src="components/actor-card.js"></script>
 </head>
 <body class="bg-gray-900 text-white">
     <custom-navbar></custom-navbar>
     
     <main class="container mx-auto px-4 py-8">
-        <!-- قسم عرض الفيلم مع البوستر والمعلومات -->
+        <!-- Video Player Section -->
+        <section class="mb-12" id="videoSection">
+            <!-- سيتم تعبئته بالجافاسكريبت -->
+        </section>
+
+        <!-- Movie Details Section -->
         <section id="movie-details" class="movie-details-section mb-12">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold border-b border-gray-700 pb-2">تفاصيل الفيلم</h2>
-                <a href="index.html" class="text-red-500 hover:text-red-400 transition flex items-center gap-2">
-                    <i data-feather="arrow-right"></i>
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold border-b border-gray-700 pb-3">تفاصيل الفيلم</h2>
+                <a href="index.html" class="text-red-500 hover:text-red-400 transition duration-300 flex items-center gap-2">
+                    <i data-feather="arrow-right" class="w-4 h-4"></i>
                     العودة للرئيسية
                 </a>
             </div>
             
-            <div class="movie-details-container bg-gray-800 rounded-xl overflow-hidden">
+            <div class="movie-details-container bg-gray-800 rounded-2xl overflow-hidden border border-gray-700">
                 <div class="flex flex-col lg:flex-row">
-                    <!-- قسم البوستر -->
-                    <div class="lg:w-1/3 p-6">
-                        <div class="poster-wrapper">
+                    <!-- Poster Section -->
+                    <div class="lg:w-2/5 xl:w-1/3 p-6 lg:p-8">
+                        <div class="poster-wrapper sticky top-6">
                             <img src="" 
                                  alt="بوستر الفيلم" 
-                                 class="w-full rounded-lg shadow-2xl transition-transform duration-300 hover:scale-105"
-                                 id="moviePoster">
-                            <div class="flex gap-3 mt-4">
-                                <button class="flex-1 bg-red-600 hover:bg-red-700 py-3 rounded-lg font-medium transition flex items-center justify-center gap-2 play-movie-btn">
-                                    <i data-feather="play"></i>
+                                 class="w-full rounded-2xl shadow-2xl transition-transform duration-300 hover:scale-105"
+                                 id="currentMoviePoster">
+                            <div class="flex gap-3 mt-6">
+                                <button id="playButton" class="flex-1 bg-red-600 hover:bg-red-700 py-4 rounded-xl font-medium transition-all duration-300 flex items-center justify-center gap-3 text-lg transform hover:scale-105">
+                                    <i data-feather="play" class="w-5 h-5"></i>
                                     تشغيل الفيلم
                                 </button>
-                                <button class="flex-1 bg-gray-700 hover:bg-gray-600 py-3 rounded-lg font-medium transition flex items-center justify-center gap-2 add-to-list-btn">
-                                    <i data-feather="plus"></i>
-                                    إضافة إلى المفضلة
+                                <button id="favoriteButton" class="flex-1 bg-gray-700 hover:bg-gray-600 py-4 rounded-xl font-medium transition-all duration-300 flex items-center justify-center gap-3 text-lg border border-gray-600">
+                                    <i data-feather="heart" class="w-5 h-5"></i>
+                                    المفضلة
                                 </button>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- قسم المعلومات -->
-                    <div class="lg:w-2/3 p-6">
+                    <!-- Info Section -->
+                    <div class="lg:w-3/5 xl:w-2/3 p-6 lg:p-8 border-t lg:border-t-0 lg:border-r border-gray-700">
                         <div class="movie-info">
-                            <h1 class="text-3xl font-bold mb-2 text-white" id="movieTitle">جاري التحميل...</h1>
+                            <h1 class="text-4xl font-bold mb-4 text-white" id="currentMovieTitle">جاري التحميل...</h1>
                             
-                            <div class="flex flex-wrap gap-3 mb-4" id="movieMeta">
+                            <div class="flex flex-wrap gap-3 mb-6" id="movieMeta">
                                 <!-- سيتم ملؤها بالجافاسكريبت -->
                             </div>
                             
-                            <p class="text-gray-300 mb-6 leading-relaxed" id="movieDescription">
+                            <p class="text-gray-300 mb-8 leading-relaxed text-lg" id="currentMovieDescription">
                                 جاري تحميل الوصف...
                             </p>
                             
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                                 <div class="info-item">
-                                    <span class="text-gray-400 block mb-1">المخرج:</span>
-                                    <span class="text-white font-medium" id="movieDirector">-</span>
+                                    <span class="text-gray-400 block mb-2 text-sm">المخرج:</span>
+                                    <span class="text-white font-medium text-lg" id="currentMovieDirector">-</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="text-gray-400 block mb-1">اللغة:</span>
-                                    <span class="text-white font-medium" id="movieLanguage">-</span>
+                                    <span class="text-gray-400 block mb-2 text-sm">اللغة:</span>
+                                    <span class="text-white font-medium text-lg" id="currentMovieLanguage">-</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="text-gray-400 block mb-1">البلد:</span>
-                                    <span class="text-white font-medium" id="movieCountry">-</span>
+                                    <span class="text-gray-400 block mb-2 text-sm">البلد:</span>
+                                    <span class="text-white font-medium text-lg" id="currentMovieCountry">-</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="text-gray-400 block mb-1">الجودة:</span>
-                                    <span class="text-white font-medium" id="movieQuality">-</span>
+                                    <span class="text-gray-400 block mb-2 text-sm">الجودة:</span>
+                                    <span class="text-white font-medium text-lg" id="currentMovieQuality">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="text-gray-400 block mb-2 text-sm">المدة:</span>
+                                    <span class="text-white font-medium text-lg" id="currentMovieDuration">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="text-gray-400 block mb-2 text-sm">السنة:</span>
+                                    <span class="text-white font-medium text-lg" id="currentMovieYear">-</span>
                                 </div>
                             </div>
                             
+                            <!-- Cast Section -->
                             <div class="cast-section">
-                                <h3 class="text-xl font-bold mb-3 text-white">طاقم التمثيل</h3>
-                                <div class="flex flex-wrap gap-2" id="movieCast">
+                                <h3 class="text-2xl font-bold mb-6 text-white border-b border-gray-700 pb-2">طاقم التمثيل</h3>
+                                <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4" id="currentMovieCast">
+                                    <!-- سيتم ملؤها بالجافاسكريبت -->
+                                </div>
+                            </div>
+
+                            <!-- Similar Movies -->
+                            <div class="similar-movies mt-12">
+                                <h3 class="text-2xl font-bold mb-6 text-white border-b border-gray-700 pb-2">أفلام مشابهة</h3>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="similarMovies">
                                     <!-- سيتم ملؤها بالجافاسكريبت -->
                                 </div>
                             </div>
@@ -100,64 +124,226 @@
             const movieData = JSON.parse(localStorage.getItem('currentMovie'));
             
             if (movieData) {
-                // تحديث البوستر والعنوان
-                document.getElementById('moviePoster').src = movieData.image;
-                document.getElementById('moviePoster').alt = movieData.title;
-                document.getElementById('movieTitle').textContent = movieData.title;
+                // تحديث العنوان
                 document.title = `${movieData.title} - سينما العرب`;
                 
-                // تحديث الوصف
-                document.getElementById('movieDescription').textContent = movieData.description;
-                
+                // تحديث البوستر
+                const poster = document.getElementById('currentMoviePoster');
+                poster.src = movieData.image || movieData.posterUrl;
+                poster.alt = movieData.title;
+
+                // تحديث البيانات الأساسية
+                document.getElementById('currentMovieTitle').textContent = movieData.title;
+                document.getElementById('currentMovieDescription').textContent = movieData.description;
+                document.getElementById('currentMovieDirector').textContent = movieData.director;
+                document.getElementById('currentMovieLanguage').textContent = movieData.language;
+                document.getElementById('currentMovieCountry').textContent = movieData.country;
+                document.getElementById('currentMovieQuality').textContent = movieData.quality;
+                document.getElementById('currentMovieDuration').textContent = movieData.duration;
+                document.getElementById('currentMovieYear').textContent = movieData.year;
+
                 // تحديث الميتا بيانات
                 const movieMeta = document.getElementById('movieMeta');
                 movieMeta.innerHTML = `
-                    <span class="bg-red-600 px-3 py-1 rounded-full text-sm">${movieData.rating}</span>
-                    <span class="bg-gray-700 px-3 py-1 rounded-full text-sm">${movieData.year}</span>
-                    <span class="bg-gray-700 px-3 py-1 rounded-full text-sm">${movieData.duration || '2h 18m'}</span>
-                    <span class="bg-gray-700 px-3 py-1 rounded-full text-sm">${movieData.category}</span>
+                    <span class="bg-red-600 px-4 py-2 rounded-full text-sm font-bold">⭐ ${movieData.rating}</span>
+                    <span class="bg-gray-700 px-4 py-2 rounded-lg">${movieData.year}</span>
+                    <span class="bg-gray-700 px-4 py-2 rounded-lg">${movieData.duration || '2h 18m'}</span>
+                    <span class="bg-gray-700 px-4 py-2 rounded-lg">${movieData.category}</span>
+                    <span class="bg-gray-700 px-4 py-2 rounded-lg">${movieData.quality}</span>
                 `;
-                
-                // تحديث التفاصيل
-                document.getElementById('movieDirector').textContent = movieData.director;
-                document.getElementById('movieLanguage').textContent = movieData.language;
-                document.getElementById('movieCountry').textContent = movieData.country;
-                document.getElementById('movieQuality').textContent = movieData.quality;
-                
+
                 // تحديث طاقم التمثيل
-                const movieCast = document.getElementById('movieCast');
-                movieCast.innerHTML = movieData.cast.map(actor => 
-                    `<span class="bg-gray-700 px-3 py-2 rounded-lg text-sm">${actor}</span>`
-                ).join('');
+                const movieCast = document.getElementById('currentMovieCast');
+                if (movieData.cast && movieData.cast.length > 0) {
+                    movieCast.innerHTML = movieData.cast.map(actor => `
+                        <custom-actor-card 
+                            name="${actor}"
+                            image="https://via.placeholder.com/150/334155/ffffff?text=${encodeURIComponent(actor)}"
+                            role="ممثل">
+                        </custom-actor-card>
+                    `).join('');
+                } else {
+                    movieCast.innerHTML = '<p class="text-gray-400 col-span-full text-center">لا توجد معلومات عن طاقم التمثيل</p>';
+                }
+
+                // إعداد زر التشغيل
+                const playButton = document.getElementById('playButton');
+                if (movieData.videoUrl) {
+                    playButton.onclick = () => loadVideoPlayer(movieData.videoUrl, movieData.title, movieData.image);
+                }
+
+                // إعداد زر المفضلة
+                document.getElementById('favoriteButton').onclick = () => {
+                    toggleFavorite(movieData);
+                };
+
+                // تحميل أفلام مشابهة
+                loadSimilarMovies(movieData.category);
+
             } else {
                 // إذا لم توجد بيانات، ارجع للصفحة الرئيسية
-                window.location.href = 'index.html';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
             }
             
-            // تحديث الأيقونات
             feather.replace();
         }
 
-        // معالجة أخطاء الصور
-        document.getElementById('moviePoster').onerror = function() {
-            this.src = 'https://via.placeholder.com/400x600/334155/ffffff?text=خطأ+في+تحميل+الصورة';
-        };
+        // دالة لتحميل مشغل الفيديو
+        function loadVideoPlayer(videoUrl, title, posterUrl) {
+            const videoSection = document.getElementById('videoSection');
+            videoSection.innerHTML = `
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-3xl font-bold">جاري تشغيل: ${title}</h2>
+                        <button onclick="closeVideoPlayer()" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg flex items-center gap-2 transition duration-300">
+                            <i data-feather="x" class="w-4 h-4"></i>
+                            إغلاق المشغل
+                        </button>
+                    </div>
+                    <custom-video-player 
+                        video-url="${videoUrl}"
+                        poster-url="${posterUrl}"
+                        title="${title}">
+                    </custom-video-player>
+                </div>
+            `;
+            
+            // Scroll to video section
+            videoSection.scrollIntoView({ behavior: 'smooth' });
+            feather.replace();
+        }
 
-        // استدعاء عند تحميل الصفحة
+        // دالة لإغلاق مشغل الفيديو
+        function closeVideoPlayer() {
+            document.getElementById('videoSection').innerHTML = '';
+        }
+
+        // دالة لإضافة/إزالة من المفضلة
+        function toggleFavorite(movieData) {
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            const isFavorite = favorites.some(fav => fav.id === movieData.id);
+            
+            const favoriteButton = document.getElementById('favoriteButton');
+            const heartIcon = favoriteButton.querySelector('i');
+            
+            if (isFavorite) {
+                // إزالة من المفضلة
+                favorites = favorites.filter(fav => fav.id !== movieData.id);
+                heartIcon.setAttribute('data-feather', 'heart');
+                favoriteButton.innerHTML = '<i data-feather="heart" class="w-5 h-5"></i> المفضلة';
+                showNotification('تمت الإزالة من المفضلة', 'info');
+            } else {
+                // إضافة إلى المفضلة
+                favorites.push(movieData);
+                heartIcon.setAttribute('data-feather', 'heart');
+                favoriteButton.innerHTML = '<i data-feather="heart" class="w-5 h-5 fill-current"></i> في المفضلة';
+                showNotification('تمت الإضافة إلى المفضلة', 'success');
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            feather.replace();
+        }
+
+        // دالة لعرض الإشعارات
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg transition-all duration-300 transform translate-x-0 ${
+                type === 'success' ? 'bg-green-600' : 'bg-blue-600'
+            }`;
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <i data-feather="${type === 'success' ? 'check-circle' : 'info'}" class="w-5 h-5"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            feather.replace();
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // دالة لتحميل أفلام مشابهة
+        function loadSimilarMovies(category) {
+            const similarMovies = document.getElementById('similarMovies');
+            // هذه بيانات وهمية - يمكن استبدالها ببيانات حقيقية
+            const similarMoviesData = [
+                { id: 12, title: "القاهرة 30", image: "https://via.placeholder.com/200x300/334155/ffffff?text=القاهرة+30", rating: "8.1", year: "2023", category: category },
+                { id: 13, title: "الأرض", image: "https://via.placeholder.com/200x300/334155/ffffff?text=الأرض", rating: "8.3", year: "2022", category: category },
+                { id: 14, title: "الحرافيش", image: "https://via.placeholder.com/200x300/334155/ffffff?text=الحرافيش", rating: "8.0", year: "2023", category: category },
+                { id: 15, title: "زكي شان", image: "https://via.placeholder.com/200x300/334155/ffffff?text=زكي+شان", rating: "7.8", year: "2022", category: category }
+            ];
+
+            similarMovies.innerHTML = similarMoviesData.map(movie => `
+                <div class="bg-gray-800 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-all duration-300 cursor-pointer shadow-lg" 
+                     onclick="navigateToSimilarMovie(${movie.id}, '${movie.title}', '${movie.image}', '${movie.rating}', '${movie.year}', '${movie.category}')">
+                    <img src="${movie.image}" alt="${movie.title}" class="w-full h-32 object-cover">
+                    <div class="p-3">
+                        <h4 class="font-bold text-white text-sm mb-1 truncate">${movie.title}</h4>
+                        <div class="flex justify-between text-xs text-gray-400">
+                            <span>${movie.year}</span>
+                            <span class="text-red-500">⭐ ${movie.rating}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // دالة للانتقال إلى فيلم مشابه
+        function navigateToSimilarMovie(id, title, image, rating, year, category) {
+            const movieData = {
+                id: id,
+                title: title,
+                image: image,
+                rating: rating,
+                year: year,
+                category: category,
+                description: "فيلم رائع من نفس التصنيف بمحتوى مشوق وأداء تمثيلي متميز.",
+                director: "مخرج مختلف",
+                language: "العربية",
+                country: "مصر",
+                quality: "FHD 1080p",
+                duration: "2h 00m",
+                cast: ["ممثل 1", "ممثل 2", "ممثل 3"],
+                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+            };
+            
+            localStorage.setItem('currentMovie', JSON.stringify(movieData));
+            location.reload(); // إعادة تحميل الصفحة لعرض البيانات الجديدة
+        }
+
+        // معالجة أخطاء الصور
         document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('currentMoviePoster').onerror = function() {
+                this.src = 'https://via.placeholder.com/400x600/334155/ffffff?text=خطأ+في+تحميل+الصورة';
+            };
+            
+            // تحميل بيانات الفيلم
             loadMovieDetails();
             
-            // إضافة event listeners للأزرار
-            document.querySelector('.play-movie-btn').addEventListener('click', function() {
-                const movieTitle = document.getElementById('movieTitle').textContent;
-                alert(`جاري تشغيل الفيلم: ${movieTitle}`);
-            });
-            
-            document.querySelector('.add-to-list-btn').addEventListener('click', function() {
-                const movieTitle = document.getElementById('movieTitle').textContent;
-                alert(`تم إضافة الفيلم إلى المفضلة: ${movieTitle}`);
-            });
+            // التحقق من حالة المفضلة
+            checkFavoriteStatus();
         });
+
+        // التحقق من حالة المفضلة
+        function checkFavoriteStatus() {
+            const movieData = JSON.parse(localStorage.getItem('currentMovie'));
+            if (movieData) {
+                const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                const isFavorite = favorites.some(fav => fav.id === movieData.id);
+                
+                if (isFavorite) {
+                    const favoriteButton = document.getElementById('favoriteButton');
+                    favoriteButton.innerHTML = '<i data-feather="heart" class="w-5 h-5 fill-current"></i> في المفضلة';
+                    feather.replace();
+                }
+            }
+        }
     </script>
 </body>
 </html>
