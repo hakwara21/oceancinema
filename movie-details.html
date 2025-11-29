@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الفيلم - سينما العرب</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <script type="module" src="components/navbar.js"></script>
+    <script type="module" src="components/footer.js"></script>
+</head>
+<body class="bg-gray-900 text-white">
+    <custom-navbar></custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8">
+        <!-- قسم عرض الفيلم مع البوستر والمعلومات -->
+        <section id="movie-details" class="movie-details-section mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold border-b border-gray-700 pb-2">تفاصيل الفيلم</h2>
+                <a href="index.html" class="text-red-500 hover:text-red-400 transition flex items-center gap-2">
+                    <i data-feather="arrow-right"></i>
+                    العودة للرئيسية
+                </a>
+            </div>
+            
+            <div class="movie-details-container bg-gray-800 rounded-xl overflow-hidden">
+                <div class="flex flex-col lg:flex-row">
+                    <!-- قسم البوستر -->
+                    <div class="lg:w-1/3 p-6">
+                        <div class="poster-wrapper">
+                            <img src="" 
+                                 alt="بوستر الفيلم" 
+                                 class="w-full rounded-lg shadow-2xl transition-transform duration-300 hover:scale-105"
+                                 id="moviePoster">
+                            <div class="flex gap-3 mt-4">
+                                <button class="flex-1 bg-red-600 hover:bg-red-700 py-3 rounded-lg font-medium transition flex items-center justify-center gap-2 play-movie-btn">
+                                    <i data-feather="play"></i>
+                                    تشغيل الفيلم
+                                </button>
+                                <button class="flex-1 bg-gray-700 hover:bg-gray-600 py-3 rounded-lg font-medium transition flex items-center justify-center gap-2 add-to-list-btn">
+                                    <i data-feather="plus"></i>
+                                    إضافة إلى المفضلة
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم المعلومات -->
+                    <div class="lg:w-2/3 p-6">
+                        <div class="movie-info">
+                            <h1 class="text-3xl font-bold mb-2 text-white" id="movieTitle">جاري التحميل...</h1>
+                            
+                            <div class="flex flex-wrap gap-3 mb-4" id="movieMeta">
+                                <!-- سيتم ملؤها بالجافاسكريبت -->
+                            </div>
+                            
+                            <p class="text-gray-300 mb-6 leading-relaxed" id="movieDescription">
+                                جاري تحميل الوصف...
+                            </p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="info-item">
+                                    <span class="text-gray-400 block mb-1">المخرج:</span>
+                                    <span class="text-white font-medium" id="movieDirector">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="text-gray-400 block mb-1">اللغة:</span>
+                                    <span class="text-white font-medium" id="movieLanguage">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="text-gray-400 block mb-1">البلد:</span>
+                                    <span class="text-white font-medium" id="movieCountry">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="text-gray-400 block mb-1">الجودة:</span>
+                                    <span class="text-white font-medium" id="movieQuality">-</span>
+                                </div>
+                            </div>
+                            
+                            <div class="cast-section">
+                                <h3 class="text-xl font-bold mb-3 text-white">طاقم التمثيل</h3>
+                                <div class="flex flex-wrap gap-2" id="movieCast">
+                                    <!-- سيتم ملؤها بالجافاسكريبت -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script>
+        // دالة لتحميل بيانات الفيلم من localStorage
+        function loadMovieDetails() {
+            const movieData = JSON.parse(localStorage.getItem('currentMovie'));
+            
+            if (movieData) {
+                // تحديث البوستر والعنوان
+                document.getElementById('moviePoster').src = movieData.image;
+                document.getElementById('moviePoster').alt = movieData.title;
+                document.getElementById('movieTitle').textContent = movieData.title;
+                document.title = `${movieData.title} - سينما العرب`;
+                
+                // تحديث الوصف
+                document.getElementById('movieDescription').textContent = movieData.description;
+                
+                // تحديث الميتا بيانات
+                const movieMeta = document.getElementById('movieMeta');
+                movieMeta.innerHTML = `
+                    <span class="bg-red-600 px-3 py-1 rounded-full text-sm">${movieData.rating}</span>
+                    <span class="bg-gray-700 px-3 py-1 rounded-full text-sm">${movieData.year}</span>
+                    <span class="bg-gray-700 px-3 py-1 rounded-full text-sm">${movieData.duration || '2h 18m'}</span>
+                    <span class="bg-gray-700 px-3 py-1 rounded-full text-sm">${movieData.category}</span>
+                `;
+                
+                // تحديث التفاصيل
+                document.getElementById('movieDirector').textContent = movieData.director;
+                document.getElementById('movieLanguage').textContent = movieData.language;
+                document.getElementById('movieCountry').textContent = movieData.country;
+                document.getElementById('movieQuality').textContent = movieData.quality;
+                
+                // تحديث طاقم التمثيل
+                const movieCast = document.getElementById('movieCast');
+                movieCast.innerHTML = movieData.cast.map(actor => 
+                    `<span class="bg-gray-700 px-3 py-2 rounded-lg text-sm">${actor}</span>`
+                ).join('');
+            } else {
+                // إذا لم توجد بيانات، ارجع للصفحة الرئيسية
+                window.location.href = 'index.html';
+            }
+            
+            // تحديث الأيقونات
+            feather.replace();
+        }
+
+        // معالجة أخطاء الصور
+        document.getElementById('moviePoster').onerror = function() {
+            this.src = 'https://via.placeholder.com/400x600/334155/ffffff?text=خطأ+في+تحميل+الصورة';
+        };
+
+        // استدعاء عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMovieDetails();
+            
+            // إضافة event listeners للأزرار
+            document.querySelector('.play-movie-btn').addEventListener('click', function() {
+                const movieTitle = document.getElementById('movieTitle').textContent;
+                alert(`جاري تشغيل الفيلم: ${movieTitle}`);
+            });
+            
+            document.querySelector('.add-to-list-btn').addEventListener('click', function() {
+                const movieTitle = document.getElementById('movieTitle').textContent;
+                alert(`تم إضافة الفيلم إلى المفضلة: ${movieTitle}`);
+            });
+        });
+    </script>
+</body>
+</html>

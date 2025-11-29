@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - إدارة المحتوى</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <!-- تحميل المكونات -->
+    <script type="module" src="components/navbar.js"></script>
+    <script type="module" src="components/footer.js"></script>
+    <script type="module" src="components/movie-card.js"></script>
+</head>
+<body class="bg-gray-900 text-white">
+    <custom-navbar></custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8 mt-16">
+        <!-- رأس لوحة التحكم -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-2">🎬 لوحة تحكم المشرف</h1>
+            <p class="text-gray-400">إدارة الأفلام والمسلسلات والمحتوى</p>
+        </div>
+
+        <!-- إحصائيات سريعة -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-gray-800 rounded-xl p-6 text-center">
+                <div class="text-2xl font-bold text-red-500">42</div>
+                <div class="text-gray-400">الأفلام</div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6 text-center">
+                <div class="text-2xl font-bold text-blue-500">28</div>
+                <div class="text-gray-400">المسلسلات</div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6 text-center">
+                <div class="text-2xl font-bold text-green-500">1,254</div>
+                <div class="text-gray-400">المشاهدات</div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6 text-center">
+                <div class="text-2xl font-bold text-yellow-500">15</div>
+                <div class="text-gray-400">المستخدمين</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- العمود الأيسر: إضافة محتوى جديد -->
+            <div class="lg:col-span-2">
+                <!-- نموذج إضافة فيلم جديد -->
+                <div class="bg-gray-800 rounded-xl p-6 mb-6">
+                    <h2 class="text-xl font-bold mb-4">🎥 إضافة فيلم جديد</h2>
+                    <form id="add-movie-form" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">عنوان الفيلم</label>
+                                <input type="text" id="movie-title" class="w-full bg-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">سنة الإنتاج</label>
+                                <input type="number" id="movie-year" class="w-full bg-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" min="1900" max="2030" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">التقييم</label>
+                                <input type="number" id="movie-rating" class="w-full bg-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" min="0" max="10" step="0.1" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">المدة (دقائق)</label>
+                                <input type="number" id="movie-duration" class="w-full bg-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">التصنيف</label>
+                            <select id="movie-category" class="w-full bg-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" required>
+                                <option value="">اختر التصنيف</option>
+                                <option value="دراما">دراما</option>
+                                <option value="أكشن">أكشن</option>
+                                <option value="كوميدي">كوميدي</option>
+                                <option value="رومانسي">رومانسي</option>
+                                <option value="رعب">رعب</option>
+                                <option value="تشويق">تشويق</option>
+                                <option value="خيال علمي">خيال علمي</option>
+                                <option value="تاريخي">تاريخي</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">رابط البوستر</label>
+                            <input type="url" id="movie-poster" class="w-full bg-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="https://example.com/poster.jpg" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">رابط الفيديو</label>
+                            <input type="url" id="movie-video" class="w-full bg-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="https://example.com/video.mp4" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">قصة الفيلم</label>
+                            <textarea id="movie-description" rows="4" class="w-full bg-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-600" required></textarea>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-medium transition flex items-center gap-2">
+                                <span>➕</span>
+                                إضافة الفيلم
+                            </button>
+                            <button type="button" id="preview-movie" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg font-medium transition flex items-center gap-2">
+                                <span>👁️</span>
+                                معاينة
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- قائمة الأفلام المضافة حديثاً -->
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <h2 class="text-xl font-bold mb-4">📋 الأفلام المضافة حديثاً</h2>
+                    <div class="space-y-4" id="recent-movies">
+                        <!-- الأفلام ستضاف هنا ديناميكياً -->
+                        <div class="text-center py-8 text-gray-500" id="no-movies-message">
+                            لا توجد أفلام مضافة بعد
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- العمود الأيمن: أدوات سريعة -->
+            <div class="space-y-6">
+                <!-- أدوات سريعة -->
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <h2 class="text-xl font-bold mb-4">⚡ أدوات سريعة</h2>
+                    <div class="space-y-3">
+                        <button id="import-movies" class="w-full bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded-lg transition text-right flex items-center justify-between">
+                            <span>استيراد أفلام</span>
+                            <span>📥</span>
+                        </button>
+                        <button id="export-data" class="w-full bg-green-600 hover:bg-green-700 px-4 py-3 rounded-lg transition text-right flex items-center justify-between">
+                            <span>تصدير البيانات</span>
+                            <span>📤</span>
+                        </button>
+                        <button id="clear-cache" class="w-full bg-yellow-600 hover:bg-yellow-700 px-4 py-3 rounded-lg transition text-right flex items-center justify-between">
+                            <span>مسح الذاكرة</span>
+                            <span>🗑️</span>
+                        </button>
+                        <button id="backup-data" class="w-full bg-purple-600 hover:bg-purple-700 px-4 py-3 rounded-lg transition text-right flex items-center justify-between">
+                            <span>نسخ احتياطي</span>
+                            <span>💾</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- الإحصائيات -->
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <h2 class="text-xl font-bold mb-4">📊 الإحصائيات</h2>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span>إجمالي الأفلام:</span>
+                            <span class="font-bold">42</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>إجمالي المسلسلات:</span>
+                            <span class="font-bold">28</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>المشاهدات اليوم:</span>
+                            <span class="font-bold">156</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>المستخدمين النشطين:</span>
+                            <span class="font-bold">8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- المعاينة السريعة -->
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <h2 class="text-xl font-bold mb-4">👁️ معاينة سريعة</h2>
+                    <div id="quick-preview">
+                        <custom-movie-card 
+                            id="preview-card"
+                            data-id="preview"
+                            title="عنوان الفيلم"
+                            image="https://via.placeholder.com/320x240/334155/ffffff?text=معاينة"
+                            rating="0.0"
+                            year="2024"
+                            category="دراما">
+                        </custom-movie-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script>
+        // كود إدارة المحتوى
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            
+            // مصفوفة لتخزين الأفلام
+            let movies = JSON.parse(localStorage.getItem('admin-movies')) || [];
+            
+            // عناصر DOM
+            const movieForm = document.getElementById('add-movie-form');
+            const previewBtn = document.getElementById('preview-movie');
+            const recentMovies = document.getElementById('recent-movies');
+            const noMoviesMessage = document.getElementById('no-movies-message');
+            const previewCard = document.getElementById('preview-card');
+            
+            // تحديث قائمة الأفلام
+            function updateMoviesList() {
+                if (movies.length === 0) {
+                    noMoviesMessage.style.display = 'block';
+                    recentMovies.innerHTML = '<div class="text-center py-8 text-gray-500">لا توجد أفلام مضافة بعد</div>';
+                    return;
+                }
+                
+                noMoviesMessage.style.display = 'none';
+                recentMovies.innerHTML = '';
+                
+                // عرض آخر 5 أفلام مضافة
+                const recent = movies.slice(-5).reverse();
+                
+                recent.forEach((movie, index) => {
+                    const movieElement = document.createElement('div');
+                    movieElement.className = 'bg-gray-700 rounded-lg p-4 flex items-center justify-between';
+                    movieElement.innerHTML = `
+                        <div class="flex items-center gap-4">
+                            <img src="${movie.poster}" alt="${movie.title}" class="w-16 h-16 object-cover rounded">
+                            <div>
+                                <h3 class="font-bold">${movie.title}</h3>
+                                <p class="text-gray-400 text-sm">${movie.year} • ${movie.category}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="edit-movie bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm" data-id="${movie.id}">تعديل</button>
+                            <button class="delete-movie bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm" data-id="${movie.id}">حذف</button>
+                        </div>
+                    `;
+                    recentMovies.appendChild(movieElement);
+                });
+                
+                // إضافة event listeners للأزرار
+                document.querySelectorAll('.edit-movie').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const movieId = this.getAttribute('data-id');
+                        editMovie(movieId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-movie').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const movieId = this.getAttribute('data-id');
+                        deleteMovie(movieId);
+                    });
+                });
+            }
+            
+            // معاينة الفيلم
+            previewBtn.addEventListener('click', function() {
+                const formData = getFormData();
+                if (formData) {
+                    previewCard.setAttribute('title', formData.title);
+                    previewCard.setAttribute('image', formData.poster);
+                    previewCard.setAttribute('rating', formData.rating);
+                    previewCard.setAttribute('year', formData.year);
+                    previewCard.setAttribute('category', formData.category);
+                    
+                    // إعادة تهيئة المكون
+                    if (previewCard.connectedCallback) {
+                        previewCard.connectedCallback();
+                    }
+                }
+            });
+            
+            // إضافة فيلم جديد
+            movieForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = getFormData();
+                
+                if (formData) {
+                    const newMovie = {
+                        id: Date.now().toString(),
+                        ...formData,
+                        dateAdded: new Date().toLocaleDateString('ar-EG')
+                    };
+                    
+                    movies.push(newMovie);
+                    localStorage.setItem('admin-movies', JSON.stringify(movies));
+                    
+                    updateMoviesList();
+                    movieForm.reset();
+                    
+                    alert('✅ تم إضافة الفيلم بنجاح!');
+                }
+            });
+            
+            // الحصول على بيانات النموذج
+            function getFormData() {
+                const title = document.getElementById('movie-title').value.trim();
+                const year = document.getElementById('movie-year').value;
+                const rating = document.getElementById('movie-rating').value;
+                const duration = document.getElementById('movie-duration').value;
+                const category = document.getElementById('movie-category').value;
+                const poster = document.getElementById('movie-poster').value.trim();
+                const video = document.getElementById('movie-video').value.trim();
+                const description = document.getElementById('movie-description').value.trim();
+                
+                if (!title || !year || !rating || !duration || !category || !poster || !video || !description) {
+                    alert('❌ الرجاء ملء جميع الحقول');
+                    return null;
+                }
+                
+                return {
+                    title,
+                    year: parseInt(year),
+                    rating: parseFloat(rating),
+                    duration: parseInt(duration),
+                    category,
+                    poster,
+                    video,
+                    description
+                };
+            }
+            
+            // تعديل فيلم
+            function editMovie(movieId) {
+                const movie = movies.find(m => m.id === movieId);
+                if (movie) {
+                    // تعبئة النموذج ببيانات الفيلم
+                    document.getElementById('movie-title').value = movie.title;
+                    document.getElementById('movie-year').value = movie.year;
+                    document.getElementById('movie-rating').value = movie.rating;
+                    document.getElementById('movie-duration').value = movie.duration;
+                    document.getElementById('movie-category').value = movie.category;
+                    document.getElementById('movie-poster').value = movie.poster;
+                    document.getElementById('movie-video').value = movie.video;
+                    document.getElementById('movie-description').value = movie.description;
+                    
+                    // تمرير إلى أعلى الصفحة
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+            
+            // حذف فيلم
+            function deleteMovie(movieId) {
+                if (confirm('⚠️ هل أنت متأكد من حذف هذا الفيلم؟')) {
+                    movies = movies.filter(m => m.id !== movieId);
+                    localStorage.setItem('admin-movies', JSON.stringify(movies));
+                    updateMoviesList();
+                    alert('✅ تم حذف الفيلم بنجاح');
+                }
+            }
+            
+            // الأدوات السريعة
+            document.getElementById('import-movies').addEventListener('click', function() {
+                alert('📥 ميزة استيراد الأفلام قريباً...');
+            });
+            
+            document.getElementById('export-data').addEventListener('click', function() {
+                if (movies.length > 0) {
+                    const dataStr = JSON.stringify(movies, null, 2);
+                    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                    const url = URL.createObjectURL(dataBlob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'movies-backup.json';
+                    link.click();
+                    alert('✅ تم تصدير البيانات بنجاح');
+                } else {
+                    alert('❌ لا توجد بيانات للتصدير');
+                }
+            });
+            
+            document.getElementById('clear-cache').addEventListener('click', function() {
+                if (confirm('⚠️ هل تريد مسح جميع البيانات المحفوظة؟')) {
+                    localStorage.removeItem('admin-movies');
+                    movies = [];
+                    updateMoviesList();
+                    alert('✅ تم مسح البيانات بنجاح');
+                }
+            });
+            
+            document.getElementById('backup-data').addEventListener('click', function() {
+                alert('💾 ميزة النسخ الاحتياطي قريباً...');
+            });
+            
+            // التهيئة الأولية
+            updateMoviesList();
+        });
+    </script>
+</body>
+</html>
